@@ -33,7 +33,7 @@ function App() {
   const handleChange = (e, p) => {
     setPage(p);
     _DATA.jump(p);
-    navigate(`/assignments/${p}`);
+    navigate(`/${p}`);
     
   };
 
@@ -149,9 +149,9 @@ function App() {
               );
             })} */}
             <Routes>
-            <Route index path="/assignments/1" element={<MyTable data={_DATA}></MyTable>} />
-            <Route path="/assignments/2" element={<MyTable data={_DATA}></MyTable>} />
-            <Route path="/assignments/3" element={<MyTable data={_DATA}></MyTable>} />
+            <Route index path="/1" element={<MyTable data={_DATA}></MyTable>} />
+            <Route path="/2" element={<MyTable data={_DATA}></MyTable>} />
+            <Route path="/3" element={<MyTable data={_DATA}></MyTable>} />
             </Routes>
             
             
