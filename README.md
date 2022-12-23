@@ -1,3 +1,10 @@
+1. Donwlaod the zip file or clone repositiory 
+2. run - npm i node in terminal
+3. run - npm start # this will start the project
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -5,6 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
 
 ### `npm start`
 
