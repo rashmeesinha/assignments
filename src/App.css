@@ -1,38 +1,139 @@
+body {
+  background-color: rgb(39, 36, 36);
+  
+}
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  margin-top: 5%;
+  min-height: 85vh;
+  color: white;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App .container {
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+.App .flex-container {
+  width: 100%;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+
+  align-items: center;
+}
+
+.App .header {
+  background-color: rgb(202, 53, 53);
   color: white;
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  height: 25px;
 }
 
-.App-link {
-  color: #61dafb;
+.App .header .headerItem {
+  width: 33%;
+  float: left;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* .App .container .flex-container .list {
+  background-color: white;
+  color: black;
+  display: flex;
+  width: 100%;
+  padding: 5px;
+
+  line-height: 25px;
+}
+
+.App .container .flex-container .list .item {
+  float: left;
+  flex-basis: 33%;
+  
+}
+.App .container .flex-container .list .item p{
+  display: none;
+} */
+.table-container{
+  width: 100%;
+  margin-left:-11px;
+  min-height: 200px;
+}
+
+.table-container .list {
+  background-color: white;
+  color: black;
+  display: flex;
+  width: 100%;
+  padding: 5px;
+
+  line-height: 25px;
+}
+
+.table-container .list .item {
+  float: left;
+  flex-basis: 33%;
+  
+}
+.table-container .list .item p{
+  display: none;
+}
+
+.App .container .flex-container .list:nth-child(2n-1) {
+  background-color: rgb(226, 221, 221);
+}
+
+.App .pagination{
+ background-color: white;
+ margin-top: 3%;
+ border-radius: 10px;
+
+
+}
+
+.App .pagination li :active{
+  background-color: red;
+  color: white;
+  
+ }
+
+
+@media only screen and (max-width: 700px) {
+  .App .container .flex-container .header {
+    height: 2px;
   }
-  to {
-    transform: rotate(360deg);
+  .App .container .flex-container .header .headerItem {
+    color: rgb(202, 53, 53);
   }
+  .table-container .list {
+    flex-wrap: wrap;
+    height: 200px;
+  }
+  .table-container .list .item {
+    flex-basis: 220px;
+    line-height: 20px;
+    margin-left: 5%;
+  }
+  .table-container .list .item p{
+    display: block;
+    font-size: 12px;
+    line-height: 10px;
+    font-weight: bold;
+    padding: 0;
+    color: rgb(80, 74, 74);
+  }
+
+}
+
+
+.hidden {
+  visibility: hidden;
 }
