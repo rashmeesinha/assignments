@@ -1,16 +1,14 @@
 import "./App.css";
 import data from "./data.json";
 import { useState } from "react";
-import {
-  useLocation,
-  useNavigate,
-  BrowserRouter,
-  Route,
-  Routes,
-  Link
-} from "react-router-dom";
-import usePagination from "./Pagination";
-import { Pagination } from "@mui/material";
+import { useNavigate, Route, Routes, useParams } from "react-router-dom";
+
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 import MyTable from "./MyTable";
 
 function App() {
@@ -21,21 +19,20 @@ function App() {
   const [isname, setisname] = useState(true);
   const [isposition, setisposition] = useState(true);
   const [isoffice, setisoffice] = useState(true);
+
+  
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const perPage = 5;
+  const maxPage = Math.ceil(data.length / perPage);
+
   const navigate = useNavigate();
-  //const location = useLocation();
 
-  let [page1, setPage] = useState(1);
-  const PER_PAGE = 5;
-
-  const count = Math.ceil(filterdata.length / PER_PAGE);
-  const _DATA = usePagination(filterdata, PER_PAGE);
-
-  const handleChange = (e, p) => {
-    setPage(p);
-    _DATA.jump(p);
-    navigate(`/${p}`);
-    
-  };
+  const noOfPages = [];
+  for (let i = 1; i <= maxPage; i++) {
+    noOfPages.push(i);
+  }
 
   function filterData(e) {
     setfilter(
@@ -58,7 +55,7 @@ function App() {
   return (
     <div className="App">
       <div style={{ paddingBottom: "20px" }}>
-        <form>
+        <form style={{display:"flex",flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
           <input
             placeholder="search.."
             style={{
@@ -70,8 +67,8 @@ function App() {
             onKeyUp={filterData}
           ></input>
 
-          <label onClick={filterTab}>
-            <u>Filter </u>{" "}
+          <label onClick={filterTab} style={{marginTop:"0"}}>
+            <u style={{display:"flex",flexDirection:"row", justifyContent:"center"}}>Filter<KeyboardArrowDownIcon style={{}}/> </u>{" "}
           </label>
         </form>
 
@@ -84,7 +81,7 @@ function App() {
               zIndex: "1",
               backgroundColor: "white",
               position: "absolute",
-              top: "15%",
+              top: "16%",
               left: "55%",
               color: "black",
             }}
@@ -128,50 +125,91 @@ function App() {
           </div>
 
           <div className="table-container">
-            {/* {_DATA.currentData().map((item) => {
-              return (
-                <div className="list">
+            <main>
+              <Routes>
+                {noOfPages.map((i, key) => {
                   
+                  return (
+                    
+                    <Route
+                      path={`/${i}`}
+                      exact
+                      element={
+                        <MyTable
+                          data={filterdata}
+                          currentP={i}
+                          perPage={perPage}
+                        ></MyTable>
+                      }
+                    ></Route>
+                  );
+                })}
+              </Routes>
+            </main>
+            <div className="pagination-buttons">
+              <a
+                onClick={() => {
+                  setCurrentPage(1);
+                  //console.log(currentPage, data);
+                  navigate(`/1`);
+                  window.localStorage.setItem("pageHighlight", 1);
 
-                  <div className="item">
-                    <p>NAME</p>
-                    {item.Name}
-                  </div>
-                  <div className="item">
-                    <p>POSITION</p>
-                    {item.Position}
-                  </div>
-                  <div className="item">
-                    <p>OFFICE</p>
-                    {item.Office}
-                  </div>
-                </div>
-              );
-            })} */}
-            <Routes>
-            <Route index path="/1" element={<MyTable data={_DATA}></MyTable>} />
-            <Route path="/2" element={<MyTable data={_DATA}></MyTable>} />
-            <Route path="/3" element={<MyTable data={_DATA}></MyTable>} />
-            </Routes>
-            
-            
-            
-            {console.log(_DATA)}
-        
-            {/* <MyTable data={_DATA}></MyTable> */}
+                }}
+              >
+                <KeyboardDoubleArrowLeftIcon/>
+              </a >
+              <a 
+                onClick={() => {
+                  let p=Math.max(currentPage - 1, 1)
+                  setCurrentPage(Math.max(currentPage - 1, 1));
+                  //console.log(currentPage, data);
+                  navigate(`/${p}`);
+                  window.localStorage.setItem("pageHighlight", p);
+                }}
+              >
+                <ArrowBackIosIcon/>
+              </a>
+
+              {noOfPages.map((item) => {
+
+                return (
+                 <a className={ item==window.localStorage.getItem('pageHighlight')? 'pagination_link' : null} key={item} style={{}}
+                 onClick={() => {
+                   setCurrentPage(item);
+                   // console.log(currentPage, data);
+                   navigate(`/${item}`);
+                  window.localStorage.setItem("pageHighlight", item);
+                 }}
+               >
+                 {item}
+               </a>
+                );
+              })}
+
+              <a 
+                onClick={() => {
+                  let p=Math.min(currentPage + 1, maxPage)
+                  setCurrentPage(p);
+                  // console.log(currentPage, data);
+                  navigate(`/${p}`);
+                  window.localStorage.setItem("pageHighlight", p);
+                }}
+              >
+               <ArrowForwardIosIcon/>
+              </a>
+              <a 
+                onClick={() => {
+                 
+                  setCurrentPage(maxPage);
+                  // console.log(currentPage, data);
+                  navigate(`/${maxPage}`);
+                  window.localStorage.setItem("pageHighlight", maxPage);
+                }}
+              >
+                <KeyboardDoubleArrowRightIcon/>
+              </a>
+            </div>
           </div>
-
-          <Pagination
-            className="pagination"
-            count={count}
-            size="medium"
-            page={page1}
-            variant="outlined"
-            shape="rounded"
-            onChange={handleChange}
-            showFirstButton
-            showLastButton
-          />
         </div>
       </div>
     </div>
