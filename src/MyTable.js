@@ -2,10 +2,18 @@ import React from "react";
 import "./App.css";
 
 function MyTable(props) {
+
+  // let displayData=[];
+  // if(props.data.currentPage==props.page){
+    
+  // }
+  let data=props.data;
+  let currentPage=props.currentP
+  let perPage=props.perPage
     
   return (
     <div>
-      {props.data.currentData().map((item) => {
+      {data.slice((currentPage - 1) * perPage, currentPage * perPage).map((item,key) => {
         return (
           <div className="list">
             <div className="item">
